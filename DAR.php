@@ -1,17 +1,23 @@
-
 <?php
 
-$image_path = "Daily Activity Report.png";
+//Img Path
+$imagePath = 'Daily Activity Report.png';
 $QRimage_path = "Resources/img/qr.png";
-$alt_text = "Daily Activity Report";
-$qralt_text = "QR NO.3456";
-$qrpossxy = 'position: absolute; top: 1460px; left: 960px; width: 150px;';
-echo "<img src='$image_path' alt='$alt_text'>";
+
+
+//Image Display
+$imageInfo = getimagesize($imagePath);
+header('Content-Type:  ' . $imageInfo['mime']);
+readfile($imagePath);
+
+//Image Create
+
+$QRimage = imagecreatefrompng($QRimage_path);
 $image = imagecreatefrompng('Resources/img/eform.png');
-// Text Color
+imagecopy($image,$QRimage,930,1450,0,0,193,162);
 $black = imagecolorallocate ($image, 0,0,0 );
 $white = imagecolorallocate ($image, 255,255,255 );
-// Font TEXT
+
 $font1 = 'Resources/fonts/Arial.ttf';
 
 // FONT SIZE
@@ -81,7 +87,7 @@ imagettftext($image, $fontsize1, 0, 165, 1483 ,$black,$font1 ,$Sitein );
 imagettftext($image, $fontsize1, 0, 165, 1519 ,$black,$font1 ,$Siteout );
 imagettftext($image, $fontsize1, 0, 848, 388 ,$black,$font1 ,$Others );
 
-// Check box
+// Checkbox
 //row 1
 imagettftext($image, $fontsize2, 0, 58, 391 ,$black,$font1 ,$checkbox );
 imagettftext($image, $fontsize2, 0, 58, 417 ,$black,$font1 ,$checkbox );
@@ -118,17 +124,10 @@ imagettftext($image, $fontsize1, 0, 110, 673 ,$black,$font1 ,$Action );
 imagettftext($image, $fontsize1, 0, 35, 862 ,$black,$font1 ,$Remarks );
 imagettftext($image, $fontsize1, 0, 25, 1210 ,$black,$font1 ,$AdditionalManpower[0] );
 
-
-
-
-//QRCODE 
-echo "<img src='$QRimage_path' alt='$qralt_text'style='$qrpossxy'>";
-
-
-// destroy
-
+imagepng ($image);
 imagepng ($image,'Daily Activity Report.png');
-
 imagedestroy($image);
 
-?>
+
+
+
